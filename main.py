@@ -23,57 +23,111 @@ R7: if SD is ZE and A is NS then TC is PS
 R8: if SD is ZE and A is NM then TC is PM
 """
 
+# import numpy as np
+
+# Speed = 80
+# Acceleration = 120
+
+# Speed = int(input('Enter the speed: '))
+# Acceleration = int(input('ENter the acceleration: '))
+# print('\n')
+
+# def openLeft(x,alpha,beta):
+#     if x<alpha:
+#         return 1
+#     if x>alpha and x<=beta:
+#         return (beta-x)/(beta-alpha)
+#     else:
+#         return 0
+
+# def openRight(x,alpha,beta):
+#     if x<alpha:
+#         return 0
+#     if x>alpha and x<=beta:
+#         return (x-alpha)/(beta-alpha)
+#     else:
+#         return 0
+
+# def triangular(x,a,b,c):
+#     return max(min((x-a)/(b-a), (c-x)/(c-b)),0)
+
+# def partition(x):
+#     NL = 0; NM = 0; NS = 0; ZE = 0; PS = 0; PM = 0; PL = 0
+
+#     if x > 0 and x < 60:
+#         NL = openLeft(x,30,60)
+#     if x >30 and x < 90:
+#         NM = triangular(x,30,60,90)
+#     if x >60 and x < 120:
+#         NS = triangular(x,60,90,120)
+#     if x >90 and x < 150:
+#         ZE = triangular(x,90,120,150)
+#     if x >120 and x < 180:
+#         PS = triangular(x,120,150,180)
+#     if x >150 and x < 210:
+#         PM = triangular(x,150,180,210)
+#     if x >180 and x < 240:
+#         PL = openRight(x,180,240)
+
+#         return NL,NM, NS, ZE, PS, PM, PL;
+
+# #Getting fuzzy values for all inputs of fuzzy sets
+# NLSD, NMSD, NSSD, ZESD, PSSD, PMSD, PLSD = partition(Speed)
+# NLAC, NMAC, NSAC, ZEAC, PSAC, PMAC, PLAC = partition(Acceleration)
+
 import numpy as np
 
 Speed = 80
 Acceleration = 120
 
 Speed = int(input('Enter the speed: '))
-Acceleration = int(input('ENter the acceleration: '))
+Acceleration = int(input('Enter the acceleration: '))
 print('\n')
-
-def openLeft(x,alpha,beta):
+#Functions for open left-Right fuzzyfication  
+def openLeft(x,alpha, beta):
     if x<alpha:
         return 1
-    if x>alpha and x<=beta:
-        return (beta-x)/(beta-alpha)
+    if alpha<x and x<=beta:
+        return (beta - x)/(beta - alpha)
     else:
         return 0
-
-def openRight(x,alpha,beta):
+    
+def openRight(x,alpha, beta):
     if x<alpha:
         return 0
-    if x>alpha and x<=beta:
-        return (x-alpha)/(beta-alpha)
+    if alpha<x and x<=beta:
+        return (x-alpha)/(beta - alpha)
     else:
         return 0
 
+# Function for traingular fuzzyfication  
 def triangular(x,a,b,c):
     return max(min((x-a)/(b-a), (c-x)/(c-b)),0)
 
+#Fuzzy Partition 
 def partition(x):
-    NL = 0; NM = 0; NS = 0; ZE = 0; PS = 0; PM = 0; PL = 0
-
-    if x > 0 and x < 60:
+    NL = 0;  NM = 0; NS = 0; ZE = 0; PS = 0; PM = 0; PL = 0
+    
+    if x> 0 and x<60:
         NL = openLeft(x,30,60)
-    if x >30 and x < 90:
+    if x> 30 and x<90:
         NM = triangular(x,30,60,90)
-    if x >60 and x < 120:
+    if x> 60 and x<120:
         NS = triangular(x,60,90,120)
-    if x >90 and x < 150:
+    if x> 90 and x<150:
         ZE = triangular(x,90,120,150)
-    if x >120 and x < 180:
+    if x> 120 and x<180:
         PS = triangular(x,120,150,180)
-    if x >150 and x < 210:
-        PM = triangular(x,150,180,210)
-    if x >180 and x < 240:
-        PL = openRight(x,180,240)
+    if x> 150 and x<210:
+        PM = triangular(x,120,150,180)
+    if x> 180 and x<240:
+        PL = openRight(x,180,210)
+ 
+    return NL,NM,NS,ZE,PS,PM,PL;
 
-        return NL,NM, NS, ZE, PS, PM, PL;
-
-#Getting fuzzy values for all inputs of fuzzy sets
-NLSD, NMSD, NSSD, ZESD, PSSD, PMSD, PLSD = partition(Speed)
-NLAC, NMAC, NSAC, ZEAC, PSAC, PMAC, PLAC = partition(Acceleration)
+# Getting fuzzy values for all the inputs for all the fuzzy sets
+NLSD,NMSD,NSSD,ZESD,PSSD,PMSD,PLSD = partition(Speed)
+NLAC,NMAC,NSAC,ZEAC,PSAC,PMAC,PLAC = partition(Acceleration)
 
 #display the fuzzy values for all fuzzy sets
 OUTPUT = [[NLSD, NMSD, NSSD, ZESD, PSSD, PMSD, PLSD],
